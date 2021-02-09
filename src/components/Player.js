@@ -21,19 +21,16 @@ export const Player = ({
   songs,
   setSongs,
 }) => {
-  useEffect(
-    (songs, setSongs) => {
-      setSongs(
-        songs.map((s) => {
-          return {
-            ...s,
-            active: s.id === currentSong.id,
-          };
-        })
-      );
-    },
-    [currentSong]
-  );
+  useEffect(() => {
+    setSongs(
+      songs.map((s) => {
+        return {
+          ...s,
+          active: s.id === currentSong.id,
+        };
+      })
+    );
+  }, [currentSong, songs, setSongs]);
 
   const playSongHandler = () => {
     setIsPlaying(!isPlaying);
