@@ -21,16 +21,19 @@ export const Player = ({
   songs,
   setSongs,
 }) => {
-  useEffect(() => {
-    setSongs(
-      songs.map((s) => {
-        return {
-          ...s,
-          active: s.id === currentSong.id,
-        };
-      })
-    );
-  }, [currentSong]);
+  useEffect(
+    (songs, setSongs) => {
+      setSongs(
+        songs.map((s) => {
+          return {
+            ...s,
+            active: s.id === currentSong.id,
+          };
+        })
+      );
+    },
+    [currentSong]
+  );
 
   const playSongHandler = () => {
     setIsPlaying(!isPlaying);
@@ -63,22 +66,27 @@ export const Player = ({
         : songs[(currentIndex + 1) % songs.length]
     );
 
-    if(isPlaying) audioRefHTML.current.play();
-    
+    if (isPlaying) audioRefHTML.current.play();
+
     // playAudio(isPlaying, audioRefHTML);
   };
 
   //agregando estilos
   // no olvidar el % al final, asi funciona el traslateX()
   const trackAnim = {
-    transform: `translateX(${songInfo.animationPercentage}%)`
-  }
+    transform: `translateX(${songInfo.animationPercentage}%)`,
+  };
 
   return (
     <div className="player">
       <div className="time-control">
         <p>{getTime(songInfo.currentTime)}</p>
-        <div className="track" style={{background: `linear-gradient(to right, ${currentSong.color[0]}, ${currentSong.color[1]} )`}}>
+        <div
+          className="track"
+          style={{
+            background: `linear-gradient(to right, ${currentSong.color[0]}, ${currentSong.color[1]} )`,
+          }}
+        >
           <input
             min={0}
             max={songInfo.duration || 0}
